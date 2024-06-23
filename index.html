@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .tupian {
+        width: 100%;
+        height: 200px;
+        background-color: #f0f0f0; /* 临时背景色，应替换为实际图片 */
+    }
+
+    .daohanglan {
+        width: 100%;
+        height: 50px;
+        background-color: #2a2f4a; /* 墨绿色背景 */
+        display: flex;
+        justify-content: center; /* 居中导航栏中的内容 */
+        align-items: center;
+    }
+
+    .daohanglan a {
+        color: white; /* 导航文字颜色 */
+        text-decoration: none; /* 去除下划线 */
+        font-size: 16px; /* 导航文字大小 */
+        margin: 0 80px; /* 增加链接之间的距离 */
+        padding: 5px 10px; /* 添加内边距，使背景色区域更大 */
+        transition: background-color 0.3s ease; /* 平滑过渡效果 */
+    }
+
+    .daohanglan a:hover {
+        background-color: #808080; /* 鼠标悬停时文字背景颜色变为灰色 */
+        color: white; /* 鼠标悬停时文字颜色保持白色 */
+    }
+
+    .neirong {
+        width: 80%;
+        margin: 20px auto; /* 上下边距20px，左右自动居中 */
+        padding: 20px; /* 主要内容区域内边距 */
+        background-color: #ffffff; /* 主要内容区域背景色 */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .content {
+        flex: 1;
+        display: flex; /* 使用弹性布局 */
+        justify-content: space-between; /* 使图片和文本表格间隔开 */
+    }
+    
+    .content img {
+        margin-left: 20px; /* 在图片和文本表格之间添加间隔 */
+    }
+    .selector {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px; /* 选择器下方添加一些空间 */
+    }
+/* 设置表格样式 */
+    .neirong table {
+        width: 40%; /* 使表格宽度充满内容区域 */
+        border-collapse: collapse; /* 合并边框 */
+        table-layout: fixed; /* 固定表格布局 */
+    }
+    
+    .neirong th, .neirong td {
+        padding: 5px; /* 增加单元格内边距 */
+        text-align: center; /* 使文字居中显示 */
+        border: 1px solid #ddd; /* 添加边框 */
+        width: 75px; /* 设置单元格宽度 */
+        height: 55px; /* 设置单元格高度 */
+    }
+    
+    .neirong th {
+        background-color: #f0f0f0; /* 表头背景色 */
+        font-weight: bold; /* 加粗表头字体 */
+    }
+    
+    .neirong td {
+        font-size: 14px; /* 增大单元格字体大小 */
+    }
+
+    /* 如果需要调整行高，可以添加以下样式 */
+    .neirong tr {
+        height: 50px; /* 设置行高 */
+    }
+	/* 针对移动设备的样式调整 */
+	
+	@media only screen and (max-width: 600px) {
+	    /* 调整导航栏样式 */
+		body, html {
+		    zoom: 0.7; /* 设置页面缩小倍数为0.5 */
+		}
+	    .daohanglan a {
+	        margin: 0 10px; /* 减少导航栏链接之间的间距 */
+	        padding: 5px 10px; /* 保持一定的内边距 */
+	    }
+	
+	    /* 调整内容区域样式 */
+	    .neirong {
+	        padding: 10px; /* 减少内容区域的内边距 */
+			width: 80%;
+	    }
+	
+	    .content {
+	        flex-direction: column; /* 将flex方向更改为垂直列 */
+	    }
+	
+	
+	    /* 根据需要调整其他样式 */
+	}
+
+</style>
+</head>
+<body>
+       <div class="tupian">
+           <!-- 这里可以放置图片或者使用背景图 -->
+		   <img src="img/banner-zhaosheng.png" width="100%" height="200px">
+       </div>
+       <div class="daohanglan">
+           <a href="index.html">本科一批</a>
+           <a href="国家专项.html">国家专项</a>
+           <a href="咨询.html">咨询</a>
+           <a href="历年总结部分.html">历年总结部分</a> <!-- 增加的部分 -->
+		   <a href="2024招生.html">2024招生</a>
+       </div>
+       <div class="neirong">
+           <div class="selector">
+               <select id="categorySelector">
+                   <option value="linggong">理工类</option>
+                   <option value="wenshi">文史类</option>
+               </select>
+               <select id="majorSelector" style="margin-left: 100px;">
+                   <!-- 动态加载专业内容 -->
+               </select>
+           </div>
+           <div class="content" id="content">
+               <!-- 这里放置本科一批的主要内容 -->
+           </div>
+       </div>
+<script>
+// 定义专业内容的数据结构
+const contentData = {
+    linggong: {
+		'金融学类(理工)': {
+		    text: '(金融学、金融学(国际金融与市场)、经济与金融、投资学、保险学)',
+		    table: `<table>
+		                <tr><th>年份</th><th>录取人数</th><th>最低分</th><th>最低分排名</th><th>最高分</th><th>最高分排名</th></tr>
+		                <tr><td>2023</td><td>7</td><td>625</td><td>2473</td><td>632</td><td>1849</td></tr>
+		                <tr><td>2022</td><td>8</td><td>638</td><td>2456</td><td>650</td><td>1459</td></tr>
+		                <tr><td>2021</td><td>5</td><td>639</td><td>1732</td><td>649</td><td>1035</td></tr>
+		            </table>`,
+		    image: 'img/lgjr.png '
+		},
+        '经济学类(理工)': {
+            text: '（国际经济与贸易、财政学、税收学）',
+            table: `<table>
+                        <tr><th>年份</th><th>录取人数</th><th>最低分</th><th>最低分排名</th><th>最高分</th><th>最高分排名</th></tr>
+                        <tr><td>2023</td><td>2</td><td>619</td><td>3109</td><td>623</td><td>2673</td></tr>
+                        
+                    </table>`,
+            image: 'img/jjxl.png'
+        },
+        '统计学(理工)': {
+            text: '',
+            table: `<table>
+                        <tr><th>年份</th><th>录取人数</th><th>最低分</th><th>最低分排名</th><th>最高分</th><th>最高分排名</th></tr>
+                        <tr><td>2023</td><td>3</td><td>618</td><td>3233</td><td>619</td><td>3109</td></tr>
+                        <tr><td>2022</td><td>2</td><td>630</td><td>3313</td><td>635</td><td>2740</td></tr>
+                    </table>`,
+            image: 'img/tjx.png'
+        },
+        '工商管理类(理工)': {
+            text: '（会计学、财务管理、人力资源管理、市场营销、工商管理）',
+            table: `<table>
+                        <tr><th>年份</th><th>录取人数</th><th>最低分</th><th>最低分排名</th><th>最高分</th><th>最高分排名</th></tr>
+                        <tr><td>2023</td><td>2</td><td>616</td><td>3452</td><td>618</td><td>3233</td></tr>
+                        <tr><td>2022</td><td>3</td><td>639</td><td>2359</td><td>644</td><td>1908</td></tr>
+                        <tr><td>2021</td><td>5</td><td>629</td><td>2665</td><td>653</td><td>848</td></tr>
+                    </table>`,
+            image: 'img/lkgsgl.png'
+        },
+        '金融科技(理工)': {
+            text: '',
+            table: `<table>
+                        <tr><th>年份</th><th>录取人数</th><th>最低分</th><th>最低分排名</th><th>最高分</th><th>最高分排名</th></tr>
+                        <tr><td>2023</td><td>4</td><td>614</td><td>3686</td><td>619</td><td>3109</td></tr>
+                        <tr><td>2022</td><td>3</td><td>636</td><td>2637</td><td>646</td><td>1753</td></tr>
+            
+                    </table>`,
+            image: 'img/jrkj.png'
+        },
+        '精算学(理工)': {
+            text: '',
+            table: `<table> <tr>
+                    <th>年份</th>
+                    <th>录取人数</th>
+                    <th>最低分</th>
+                    <th>最低分排名</th>
+                    <th>最高分</th>
+                    <th>最高分排名</th>
+                </tr>
+                <tr>
+                    <td>2023</td>
+                    <td>4</td>
+                    <td>614</td>
+                    <td>3686</td>
+                    <td>616</td>
+                    <td>3452</td>
+                </tr>
+                <tr>
+                    <td>2022</td>
+                    <td>2</td>
+                    <td> 631</td>
+                    <td> 3195</td>
+                    <td> 634</td>
+                    <td> 2847</td>
+                </tr>
+                <tr>
+                    <td>2021</td>
+                    <td>2</td>
+                    <td> 635</td>
+                    <td>2061</td>
+                    <td> 636</td>
+                    <td> 1977</td>
+                </tr>
+            </table>`,
+            image: 'img/jsx.png'
+        },
+
+		'电子商务(理工)': {
+			        text: '',
+			        table: `<table>
+    <tr>
+        <th>年份</th>
+        <th>录取数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2022</td>
+        <td>4</td>
+        <td>629</td>
+        <td>3448</td>
+        <td>635</td>
+        <td>2740</td>
+    </tr>
+    <tr>
+        <td>2021</td>
+        <td>6</td>
+        <td>628</td>
+        <td>2782</td>
+        <td>636</td>
+        <td>1977</td>
+    </tr>
+</table>`,
+			    image: 'img/电子商务.png'
+		},
+	},
+    wenshi: {
+        '金融学类（文史）': {
+            text: '(金融学、金融学(国际金融与市场)、经济与金融、投资学、保险学)',
+            table: `<table>
+	<tr>
+        <th>年份</th>
+        <th>录取人数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2023</td>
+        <td>3</td>
+        <td> 626</td>
+        <td> 379</td>
+        <td> 630</td>
+        <td> 292</td>
+    </tr>
+    <tr>
+        <td>2022</td>
+        <td>4</td>
+        <td> 653</td>
+        <td> 417</td>
+        <td> 660</td>
+        <td> 242</td>
+    </tr>
+    <tr>
+        <td>2021</td>
+        <td>2</td>
+        <td> 662</td>
+        <td> 151</td>
+        <td> 666</td>
+        <td> 112</td>
+    </tr>
+</table>
+`,
+            image: 'img/jrlwk.png'
+        },
+        '经济学类（文史）': {
+            text: '（国际经济与贸易、财政学、税收学）',
+            table: `<table>
+    <tr>
+        <th>年份</th>
+        <th>录取数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2023</td>
+        <td>2</td>
+        <td>629</td>
+        <td>315</td>
+        <td>631</td>
+        <td>276</td>
+    </tr>
+    <tr>
+        <td>2022</td>
+        <td>4</td>
+        <td>652</td>
+        <td>445</td>
+        <td>662</td>
+        <td>205</td>
+    </tr>
+    <tr>
+        <td>2021</td>
+        <td>4</td>
+        <td>654</td>
+        <td>296</td>
+        <td>660</td>
+        <td>185</td>
+    </tr>
+</table>
+`,
+            image: 'img/jjxlwk.png'
+        },
+        '法学类（文史）': {
+            text: '（法学，可参与法学-大数据双学士学位项目或涉外型卓越经贸法律人才实验班选拔）',
+            table: `<table>
+    <tr>
+        <th>年份</th>
+        <th>录取数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2023</td>
+        <td>4</td>
+        <td>626</td>
+        <td>379</td>
+        <td>630</td>
+        <td>292</td>
+    </tr>
+    <tr>
+        <td>2022</td>
+        <td>3</td>
+        <td>653</td>
+        <td>417</td>
+        <td>658</td>
+        <td>290</td>
+    </tr>
+    <tr>
+        <td>2021</td>
+        <td>3</td>
+        <td>651</td>
+        <td>358</td>
+        <td>653</td>
+        <td>318</td>
+    </tr>
+</table>
+`,
+            image: 'img/fxl.png'
+        },
+        '工商管理类（文史）': {
+            text: '（会计学、财务管理、人力资源管理、市场营销、工商管理）',
+            table: `<table>
+    <tr>
+        <th>年份</th>
+        <th>录取数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2023</td>
+        <td>4</td>
+        <td>626</td>
+        <td>379</td>
+        <td>632</td>
+        <td>259</td>
+    </tr>
+    <tr>
+        <td>2022</td>
+        <td>3</td>
+        <td>650</td>
+        <td>510</td>
+        <td>652</td>
+        <td>445</td>
+    </tr>
+    <tr>
+        <td>2021</td>
+        <td>4</td>
+        <td>650</td>
+        <td>383</td>
+        <td>653</td>
+        <td>318</td>
+    </tr>
+</table>
+`,
+            image: 'img/wkgsgl.png'
+        },
+        '政治学类（文史）': {
+            text: '(国际政治、政治学与行政学、政治学与行政学(与金融学专业双学士学位项目)、国际政治(与英语专业双学士学位项目))',
+            table: `<table>
+    <tr>
+        <th>年份</th>
+        <th>录取数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2023</td>
+        <td>3</td>
+        <td>625</td>
+        <td>414</td>
+        <td>625</td>
+        <td>414</td>
+    </tr>
+    <tr>
+        <td>2022</td>
+        <td>3</td>
+        <td>650</td>
+        <td>510</td>
+        <td>651</td>
+        <td>479</td>
+    </tr>
+    <tr>
+        <td>2021</td>
+        <td>3</td>
+        <td>649</td>
+        <td>401</td>
+        <td>651</td>
+        <td>358</td>
+    </tr>
+</table>
+`,
+            image: 'img/zzxl.png'
+        },
+        '外国语言学类（文史）': {
+            text: '（商务英语、翻译、英语、英语(与金融学专业双学士学位项目)、英语(与法学专业双学士学位项目)）',
+            table: `<table>
+    <tr>
+        <th>年份</th>
+        <th>录取数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2023</td>
+        <td>3</td>
+        <td>624</td>
+        <td>442</td>
+        <td>626</td>
+        <td>379</td>
+    </tr>
+    <tr>
+        <td>2022</td>
+        <td>3</td>
+        <td>650</td>
+        <td>510</td>
+        <td>652</td>
+        <td>445</td>
+    </tr>
+    <tr>
+        <td>2021</td>
+        <td>3</td>
+        <td>649</td>
+        <td>401</td>
+        <td>650</td>
+        <td>383</td>
+    </tr>
+</table>
+`,
+            image: 'img/wgyyxl.png'
+        },
+        '国际组织人才基地班（文史）': {
+            text: '（商务英语、翻译、英语、英语(与金融学专业双学士学位项目)、英语(与法学专业双学士学位项目)）',
+            table: `<table>
+    <tr>
+        <th>年份</th>
+        <th>录取数</th>
+        <th>最低分</th>
+        <th>最低分排名</th>
+        <th>最高分</th>
+        <th>最高分排名</th>
+    </tr>
+    <tr>
+        <td>2023</td>
+        <td>1</td>
+        <td>631</td>
+        <td>276</td>
+        <td>631</td>
+        <td>276</td>
+    </tr>
+</table>
+`,
+            image: 'img/gjzz.png'
+           
+        }
+    }
+};
+
+// 获取选择器元素
+const categorySelector = document.getElementById('categorySelector');
+const majorSelector = document.getElementById('majorSelector');
+const content = document.getElementById('content');
+
+// 监听类别选择器的变更事件
+categorySelector.addEventListener('change', function() {
+    // 清空专业选择器的内容
+    majorSelector.innerHTML = '';
+    
+    // 获取选中的类别
+    const category = this.value;
+    
+    // 根据选中的类别添加专业选项
+    Object.keys(contentData[category]).forEach(function(major) {
+        const option = document.createElement('option');
+        option.value = major;
+        option.textContent = major;
+        majorSelector.appendChild(option);
+    });
+
+    // 更新内容区域为选中类别的第一个专业的内容
+    const firstMajor = Object.keys(contentData[category])[0];
+    updateContent(firstMajor);
+});
+
+// 监听专业选择器的变更事件
+majorSelector.addEventListener('change', function() {
+    // 获取选中的专业
+    const major = this.value;
+    // 更新内容区域
+    updateContent(major);
+});
+
+// 更新内容区域的函数
+function updateContent(major) {
+    const category = categorySelector.value;
+    const data = contentData[category][major];
+    content.innerHTML = `
+        <div class="text-table">
+            <h1>${major}</h1>
+            <p>${data.text}</p>
+            ${data.table}
+        </div>
+        <img src="${data.image}"  style="width: 500px; height: 350px;"> <!-- 设置图片宽高 -->
+    `;
+}
+
+
+// 初始化时触发一次变更事件，以加载默认的专业内容
+categorySelector.dispatchEvent(new Event('change'));
+
+</script>
+
+
+
+</body>
+</html>
+

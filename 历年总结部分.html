@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>历年总结部分</title>
+<style>
+ body, html {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+     }
+ 
+     .tupian {
+         width: 100%;
+         height: 200px;
+         background-color: #f0f0f0; /* 临时背景色，应替换为实际图片 */
+     }
+ 
+     .daohanglan {
+         width: 100%;
+         height: 50px;
+         background-color: #2a2f4a; /* 墨绿色背景 */
+         display: flex;
+         justify-content: center; /* 居中导航栏中的内容 */
+         align-items: center;
+     }
+ 
+     .daohanglan a {
+         color: white; /* 导航文字颜色 */
+         text-decoration: none; /* 去除下划线 */
+         font-size: 16px; /* 导航文字大小 */
+         margin: 0 80px; /* 增加链接之间的距离 */
+         padding: 5px 10px; /* 添加内边距，使背景色区域更大 */
+         transition: background-color 0.3s ease; /* 平滑过渡效果 */
+     }
+ 
+     .daohanglan a:hover {
+         background-color: #808080; /* 鼠标悬停时文字背景颜色变为灰色 */
+         color: white; /* 鼠标悬停时文字颜色保持白色 */
+     }
+ 
+     .neirong {
+         width: 80%;
+         margin: 20px auto; /* 上下边距20px，左右自动居中 */
+         padding: 20px; /* 主要内容区域内边距 */
+         background-color: #ffffff; /* 主要内容区域背景色 */
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+         display: flex;
+         flex-direction: column;
+     }
+     
+     .content {
+         flex: 1;
+         display: flex; /* 使用弹性布局 */
+         justify-content: space-between; /* 使图片和文本表格间隔开 */
+         flex-wrap: wrap; /* 允许图片换行 */
+         align-items: center; /* 垂直居中图片 */
+         padding: 0 20px; /* 添加内边距，确保图片与CONTENT左右距离相等 */
+     }
+     
+     .content img {
+         margin-bottom: 20px; /* 添加图片之间的间隔 */
+         width: 100%; /* 使图片宽度适应容器 */
+     	 max-width: 600px; /* 图片最大宽度限制 */
+     }
+     
+     .content div {
+         font-size: 35px; /* 调整标题字体大小 */
+     }
+     .benkeyipititle{
+		 margin-bottom: 20px;
+	 }
+	 .gjzxititle{
+		 margin-bottom: 20px;
+	 }
+	 @media only screen and (max-width: 600px) {
+	     /* 调整导航栏样式 */
+	 	body, html {
+	 	    zoom: 0.7; /* 设置页面缩小倍数为0.5 */
+	 	}
+	     .daohanglan a {
+	         margin: 0 10px; /* 减少导航栏链接之间的间距 */
+	         padding: 5px 10px; /* 保持一定的内边距 */
+	     }
+	 
+	     /* 调整内容区域样式 */
+	     .neirong {
+	         padding: 10px; /* 减少内容区域的内边距 */
+	 		width: 80%;
+	     }
+	 
+	     .content {
+	         flex-direction: column; /* 将flex方向更改为垂直列 */
+	     }
+	 
+	 
+	     /* 根据需要调整其他样式 */
+	 }
+</style>
+</head>
+<body>
+    <div class="tupian">
+        <!-- 这里可以放置图片或者使用背景图 -->
+        <img src="img/banner-zhaosheng.png" width="100%" height="200px">
+    </div>
+    <div class="daohanglan">
+        <a href="index.html">本科一批</a>
+        <a href="国家专项.html">国家专项</a>
+        <a href="咨询.html">咨询</a>
+        <a href="历年总结部分.html">历年总结部分</a>
+		<a href="2024招生.html">2024招生</a>
+    </div>
+    <div class="neirong">
+        <div class="content" id="content">
+            <div class="benkeyipi">
+                <div class="benkeyipititle">
+                    本科一批历年情况：
+                </div>
+                <img src="img/bkypws.png" width="600px">
+                <img src="img/bkyplg.png" width="600px">
+            </div>
+            <div class="gjzx">
+                <div class="gjzxititle">
+                    国家专项历年情况：
+                </div>
+                <img src="img/gjzxlk.png" width="600px">
+                <img src="img/gjzxwk.png" width="600px">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
